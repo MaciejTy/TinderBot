@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
 from time import sleep
 
-FB_EMAIL = "YOUR FB MAIL"
+FB_EMAIL = "YOUR FB EMAIL"
 FB_PASSWORD = "YOUR FB PASSWORD"
 
 chrome_options = webdriver.ChromeOptions()
@@ -12,8 +12,9 @@ chrome_options.add_experimental_option("detach", True)
 driver = webdriver.Chrome(options=chrome_options)
 driver.get("https://tinder.com/")
 driver.maximize_window()
+sleep(2)
 
-login_button = driver.find_element(By.XPATH, value='//*[@id="t-1364086984"]/div/div[1]/div/main/div[1]/div/div/div/div/div/header/div/div[2]/div[2]/a/div[2]/div[2]/div')
+login_button = driver.find_element(By.XPATH, value='//*[@id="t-1364086984"]/div/div[1]/div/main/div[1]/div/div/div/div/div/header/div/div[2]/div[2]/a')
 login_button.click()
 
 sleep(3)
@@ -65,10 +66,12 @@ privacy_button.click()
 sleep(3)
 
 like_button = driver.find_element(By.XPATH, '//*[@id="main-content"]/div[1]/div/div/div/div[1]/div/div/div[4]/div/div[4]/button')
+dislike_button = driver.find_element(By.XPATH, '//*[@id="main-content"]/div[1]/div/div/div/div[1]/div/div/div[4]/div/div[2]/button')
 
 for n in range(100):
     try:
-        like_button.click()
+        dislike_button.click()
+        # like_button.click()
         sleep(1)
 
     except ElementClickInterceptedException:
@@ -76,5 +79,14 @@ for n in range(100):
             match_popup = driver.find_element(By.XPATH, value='//*[@id="t-1907619177"]/div/div/div[1]/div/div[3]/button')
             match_popup.click()
         except NoSuchElementException:
-            sleep(2)
-
+            sleep(1)
+        try:
+            likes = driver.find_element(By.XPATH, value='//*[@id="t-1142746548"]/div/div[1]/div/div[3]/button[2]')
+            likes.click()
+        except NoSuchElementException:
+            sleep(1)
+        try:
+            not_interest = driver.find_element(By.XPATH, value='//*[@id="t-1142746548"]/div/div/div[2]/button[2]')
+            not_interest.click()
+        except NoSuchElementException:
+            sleep(1)
